@@ -1,0 +1,41 @@
+* direnv Modules
+
+"[[https://direnv.net/][direnv]] is an extension for your shell. It augments existing shells with a new feature that can load and unload environment variables depending on the current directory."
+
+"The [[http://modules.sourceforge.net/][Environment Modules]] package is a tool that simplify shell initialization and lets users easily modify their environment during the session with modulefiles.  Modules can be loaded and unloaded dynamically and atomically, in an clean fashion."
+
+This is an Environment Modules-like interface built on top of direnv, for those who want the best of both worlds.
+
+** Setup
+
+** Usage
+
+This adds new subcommands to direnv:
+
+*** avail
+
+List all available modulefiles in the current MODULEPATH
+
+*** help
+
+Print the usage of each sub-command. If an argument is given, print the Module-specific help information for the modulefile.
+
+*** list
+
+List loaded modules.
+
+*** load modulefile...
+
+Load modulefile into the shell environment.
+
+*** purge
+
+Unload all loaded modulefiles.
+
+*** reload
+
+Unload then load all loaded modulefiles.
+
+*** unload modulefile...
+
+Remove modulefile from the shell environment.
