@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+for test in $(echo test-*); do
+    case $test in
+        *test-funcs | *test-all)
+            # don't run these
+            ;;
+        *)
+            "./$test"
+    esac
+done
