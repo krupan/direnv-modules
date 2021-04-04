@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+import sys
+from pathlib import Path
+
+
+def add(modulefile, filename):
+    filepath = Path(filename)
+    if not filepath.exists():
+        filepath.touch()
+    lines = filepath.read_text().split('\n')
+    loaded = False
+    for line in lines:
+        if line == f'source_env {modulefile}':
+            # already loaded, do nothing
+            loaded = True
+    if not loaded:
+        lines.append(f'source_env {modulefile}')
+    filepath.write_text('\n'.join(lines))
+
+
+commands = {'add': add}
+
+
+def main(args):
+    command = args[0]
+    modulefile = args[1]
+    filename = args[2]
+    return commands[command](modulefile, filename)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

@@ -1,0 +1,12 @@
+#!/bin/sh
+# start clean
+rm -f .envrc
+PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load bar/1.0
+if [ "$BAR" = "bar 1.0 loaded" ]; then
+    echo "$0 pass"
+    exit 0
+else
+    echo "$0 FAIL!"
+    exit 1
+fi
+rm -f .envrc

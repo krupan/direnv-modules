@@ -8,17 +8,38 @@ This is an Environment Modules-like interface built on top of direnv, for those 
 
 ** Setup
 
+Create dmodulefiles in a directory structure like this:
+
+#+begin_src sh
+  mkdir /opt/dmodulefiles
+  mkdir /opt/dmodulefiles/tool_a
+  mkdir /opt/dmodulefiles/tool_b
+#+end_src
+
+Inside the tool_a and tool_b directories, create text files named for the version of the tool the dmodulefile is for.  In that text file write shell syntax code to set environment variable that are needed by the tool.  For example, in =/opt/dmodulefiles/tools_a/1.3= you might have:
+
+#+begin_src sh
+  export PATH=/path/to/tool_a/bin:$PATH
+  export LM_LICENSE_FILE=4567@license_server
+#+end_src
+
+Then, in your =~/.profile= add this line:
+
+#+begin_src sh
+  export DMODULEPATH=/top/dmodulefiles
+#+end_src
+
 ** Usage
 
-This adds new subcommands to direnv:
+Everything is handled by the =dm= (for direnv module) command.  These are its sub commands:
 
 *** avail
 
-List all available modulefiles in the current MODULEPATH
+List all available modulefiles in the current DMODULEPATH
 
 *** help
 
-Print the usage of each sub-command. If an argument is given, print the Module-specific help information for the modulefile.
+Print the usage of each sub-command. If an argument is given, print the Module-specific help information for the dmodulefile.
 
 *** list
 
