@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+EXPECTED_OUTPUT=$(cat<<EOF
+bar
+bar/1.0
+bar/1.1
+bar/1.3
+foo
+foo/1.0
+foo/1.2
+foo/2.3
+foo/2.7
+EOF
+)
+
+AVAIL_OUTPUT=$(PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm avail)
+if [ "$EXPECTED_OUTPUT" = "$AVAIL_OUTPUT" ]; then
+    echo "$0 pass"
+    exit 0
+else
+    echo "$0 FAIL!"
+    exit 1
+fi
