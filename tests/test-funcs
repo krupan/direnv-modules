@@ -1,14 +1,14 @@
 # -*- sh -*-
 end_test () {
+    direnv deny .
+    rm -f .envrc
     case $2 in
         "pass")
             echo "$1 pass"
-            rm -f .envrc
             exit 0
             ;;
         "fail")
             echo "$1 FAIL!"
-            rm -f .envrc
             exit 1
             ;;
         *)
