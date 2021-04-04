@@ -1,0 +1,18 @@
+# -*- sh -*-
+end_test () {
+    case $2 in
+        "pass")
+            echo "$1 pass"
+            rm -f .envrc
+            exit 0
+            ;;
+        "fail")
+            echo "$1 FAIL!"
+            rm -f .envrc
+            exit 1
+            ;;
+        *)
+            echo "end_test error: please call with pass or fail"
+            exit 2
+    esac
+}

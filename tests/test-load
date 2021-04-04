@@ -1,12 +1,14 @@
 #!/bin/sh
+set -e
+. ./test-funcs
 # start clean
 rm -f .envrc
 PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load bar/1.0
+BAR=$(direnv exec . sh -c 'echo $BAR')
 if [ "$BAR" = "bar 1.0 loaded" ]; then
-    echo "$0 pass"
-    exit 0
+    end_test "$0" pass
 else
-    echo "$0 FAIL!"
+    end_test "$0" fail
+    rm -f .envrc
     exit 1
 fi
-rm -f .envrc
