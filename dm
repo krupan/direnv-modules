@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import glob
 import os
 import subprocess
 import sys
@@ -53,8 +52,8 @@ def load(dmodulefiles):
     for dmodulefile in dmodulefiles:
         found = False
         for path in os.environ[dmodule_path_var].split(':'):
-            full_path = path + '/' + dmodulefiles[0]
-            if not os.path.exists(full_path):
+            full_path = Path(path) / Path(dmodulefiles[0])
+            if not full_path.exists():
                 continue
             add_to_envrc(full_path)
             found = True
