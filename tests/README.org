@@ -1,0 +1,15 @@
+* Testing
+
+Tests will generally need to be written as shell scripts.  Let's stick with POSIX syntax just to be sure they'll run everywhere.  Starting each test with:
+
+#+begin_example
+#!/bin/sh
+#+end_example
+
+and running shellcheck on the test will make sure of that.
+
+Tests should be named in the form test-feature.
+
+Common functionality needed by multiple tests should go in =test-funcs=.
+
+Using =set -e= at the start of each test script is strongly recommended.
