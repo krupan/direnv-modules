@@ -4,6 +4,10 @@ set -e
 # start clean
 rm -f .envrc
 PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load bar/1.0
+EXPECTED_TEXT="source_env dmodulefiles/bar/1.0"
+if ! grep -qs "$EXPECTED_TEXT" .envrc; then
+    end_test "$0" fail
+fi
 BAR=$(direnv exec . sh -c 'echo $BAR')
 if [ "$BAR" = "bar 1.0 loaded" ]; then
     end_test "$0" pass
