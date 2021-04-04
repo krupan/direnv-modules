@@ -23,6 +23,15 @@ def add_to_envrc(dmodulefile):
         subprocess.run(['direnv', 'edit', '.'], env=new_env)
 
 
+def remove_from_envrc(dmodulefile):
+    new_env = os.environ.copy()
+    new_env["EDITOR"] = f"dm-editor remove {dmodulefile}"
+    ret = subprocess.run(['direnv', 'edit'], env=new_env,
+                         stderr=subprocess.DEVNULL)
+    if ret.returncode:
+        print('no .envrc found, nothing to unload', file=sys.stderr)
+
+
 def avail(args):
     check_path(dmodule_path_var)
     for path in os.environ[dmodule_path_var].split(':'):
@@ -74,9 +83,20 @@ def reload_dmodules(args):
     print('coming soon...', file=sys.stderr)
 
 
-def unload(args):
-    # remove corresponding source_env from .envrc
-    print('coming soon...', file=sys.stderr)
+def unload(dmodulefiles):
+    """remove corresponding source_env from .envrc
+
+    NOTE: it might currently be possible to load two modules with the
+    same name, or base name.  This will just unload them all in that
+    case.
+
+    """
+    if len(dmodulefiles) < 1:
+        print('dm: please supply the name of a dmodulefile in the form: foo/1.0',
+              file=sys.stderr)
+        return -1
+    for dmodulefile in dmodulefiles:
+        remove_from_envrc(dmodulefile)
 
 
 commands = {

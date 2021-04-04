@@ -15,10 +15,24 @@ def add(dmodulefile, filename):
             loaded = True
     if not loaded:
         lines.append(f'source_env {dmodulefile}')
-    filepath.write_text('\n'.join(lines))
+    filepath.write_text('\n'.join(lines) + '\n')
 
 
-commands = {'add': add}
+def remove(dmodulefile, filename):
+    filepath = Path(filename)
+    if not filepath.exists():
+        # no .envrc, so nothing to unload
+        return
+    lines = filepath.read_text().split('\n')
+    lines_to_write = []
+    for line in lines:
+        if dmodulefile not in line:
+            lines_to_write.append(line)
+    filepath.write_text('\n'.join(lines_to_write))
+
+
+commands = {'add': add,
+            'remove': remove}
 
 
 def main(args):

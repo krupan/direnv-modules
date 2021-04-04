@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+. ./test-funcs
+# start clean
+rm -f .envrc
+PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load bar/1.1
+EXPECTED_TEXT="source_env dmodulefiles/bar/1.1"
+if ! grep -qs "$EXPECTED_TEXT" .envrc; then
+    end_test "$0" fail
+fi
+PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm unload bar/1.1
+if grep -qs "$EXPECTED_TEXT" .envrc; then
+    end_test "$0" fail
+fi
+end_test "$0" pass
