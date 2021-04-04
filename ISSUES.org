@@ -1,0 +1,10 @@
+#+STARTUP: hidestars
+#+STARTUP: indent
+
+* Issues
+** Tasks
+*** TODO test error handling, like dm load invalid-dmodule and dm unload invalid-dmodule
+
+** Bugs
+*** TODO Tests fail, but interactive use is fine
+Just running =dm load...= and =dm unload...= on the command-line and everything seems to work fine.  The tests have errors where direnv is not trusting a .envrc that was created with =direnv edit= when you do two =dm= commands in a row.  It sorta almost feels like a race condition maybe?
