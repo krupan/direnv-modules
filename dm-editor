@@ -15,7 +15,7 @@ def add(dmodulefile, filename):
             loaded = True
     if not loaded:
         lines.append(f'source_env {dmodulefile}')
-    filepath.write_text('\n'.join(lines) + '\n')
+    filepath.write_text('\n'.join(lines))
 
 
 def remove(dmodulefile, filename):
