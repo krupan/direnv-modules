@@ -9,6 +9,5 @@ if [ "$BAR" = "bar 1.0 loaded" ]; then
     end_test "$0" pass
 else
     end_test "$0" fail
-    rm -f .envrc
     exit 1
 fi
