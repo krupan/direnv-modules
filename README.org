@@ -8,7 +8,9 @@ This is an Environment Modules-like interface built on top of direnv, for those 
 
 Here's a quick demo
 
+#+begin_export html
 <a href="https://asciinema.org/a/405131" target="_blank"><img src="https://asciinema.org/a/405131.svg" /></a>
+#+end_export
 
 ** Setup
 
