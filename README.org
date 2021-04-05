@@ -8,7 +8,7 @@ This is an Environment Modules-like interface built on top of direnv, for those 
 
 Here's a quick demo
 
-[[https://asciinema.org/a/405131][<img src="https://asciinema.org/a/405131.svg" />]]
+[[https://asciinema.org/a/405131][https://asciinema.org/a/405131.svg]]
 
 ** Setup
 
