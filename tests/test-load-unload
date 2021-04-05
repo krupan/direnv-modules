@@ -7,14 +7,18 @@ set -e
 # start clean
 rm -f .envrc
 PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load bar/1.0
-end
+# I hate that there isn't a more deterministic way to wait until the
+# above finishes creating the file in
+# /home/bryan/.local/share/direnv/allow/
+sleep 1
 PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load foo/2.3
-EXPECTED_TEXT_1="source_env dmodulefiles/bar/1.0"
-EXPECTED_TEXT_2="source_env dmodulefiles/foo/2.3"
-if ! grep -qs "$EXPECTED_TEXT_1" .envrc; then
+sleep 1
+EXPECTED_TEXT_BAR="source_env dmodulefiles/bar/1.0"
+EXPECTED_TEXT_FOO="source_env dmodulefiles/foo/2.3"
+if ! grep -qs "$EXPECTED_TEXT_BAR" .envrc; then
     end_test "$0" fail
 fi
-if ! grep -qs "$EXPECTED_TEXT_2" .envrc; then
+if ! grep -qs "$EXPECTED_TEXT_FOO" .envrc; then
     end_test "$0" fail
 fi
 BAR=$(direnv exec . sh -c 'echo $BAR')
@@ -22,7 +26,17 @@ if [ ! "$BAR" = "bar 1.0 loaded" ]; then
     end_test "$0" fail
 fi
 FOO=$(direnv exec . sh -c 'echo $FOO')
-if [ ! "$BAR" = "foo 2.3 loaded" ]; then
+if [ ! "$FOO" = "foo 2.3 loaded" ]; then
     end_test "$0" fail
 fi
-end_test pass
+
+PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm unload bar/1.0
+sleep 1
+if grep -qs "$EXPECTED_TEXT_BAR" .envrc; then
+    end_test "$0" fail
+fi
+BAR=$(direnv exec . sh -c 'echo $BAR')
+if [ ! "$BAR" = "" ]; then
+    end_test "$0" fail
+fi
+end_test "$0" pass

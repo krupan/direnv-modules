@@ -1,30 +1,22 @@
 #!/bin/sh
 set -e
-#set -x
+
 # get functions common to all tests
 . ./test-funcs
 
 # start clean
 rm -f .envrc
 
-begin_direnv
 PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load bar/1.1
-wait_direnv $count
 EXPECTED_TEXT="source_env dmodulefiles/bar/1.1"
 if ! grep -qs "$EXPECTED_TEXT" .envrc; then
     end_test "$0" fail
 fi
-end
-# can't make any of this work without this, and with this I don't need
-# begin_direnv or wait_direnv, so maybe that's all I should do is
-# sleep ¯\_(ツ)_/¯ 
-sleep 1
-echo "-----"
-begin_direnv
+# can't quite figure out why sometimes I need this in order to clean
+# up, and sometimes I don't ¯\_(ツ)_/¯
+direnv deny .
+
 PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm unload bar/1.1
-echo "waiting..."
-wait_direnv $count
-echo "done waiting..."
 if grep -qs "$EXPECTED_TEXT" .envrc; then
     end_test "$0" fail
 fi
