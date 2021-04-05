@@ -33,6 +33,8 @@ Then, in your =~/.profile= add this line:
   export DMODULEPATH=/top/dmodulefiles
 #+end_src
 
+Then copy =dm= and =dm-editor= to some directory in your =PATH=.
+
 ** Usage
 
 Everything is handled by the =dm= (for direnv module) command.  These are its sub commands:
