@@ -7,6 +7,7 @@ set -e
 # start clean
 rm -f .envrc
 PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load bar/1.0
+end
 PATH=../:$PATH DMODULEPATH=./dmodulefiles/ ../dm load foo/2.3
 EXPECTED_TEXT_1="source_env dmodulefiles/bar/1.0"
 EXPECTED_TEXT_2="source_env dmodulefiles/foo/2.3"
@@ -24,3 +25,4 @@ FOO=$(direnv exec . sh -c 'echo $FOO')
 if [ ! "$BAR" = "foo 2.3 loaded" ]; then
     end_test "$0" fail
 fi
+end_test pass

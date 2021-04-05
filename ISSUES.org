@@ -7,4 +7,11 @@
 
 ** Bugs
 *** TODO Tests fail, but interactive use is fine
-Just running =dm load...= and =dm unload...= on the command-line and everything seems to work fine.  The tests have errors where direnv is not trusting a .envrc that was created with =direnv edit= when you do two =dm= commands in a row.  It sorta almost feels like a race condition maybe?
+- Note taken on [2021-04-04 Sun 12:32] \\
+  I'm pretty sure it's a race condition.  I put some sleeps in and now the test passes.  That makes the test slow though.  I think it's probably a race on the file getting created in =~/.local/share/direnv/allow/=.  If we could predict what that filename would be we could wait for it to be created instead of just sleeping and hoping.
+  
+  I suppose we could count the number of files in =~/.local/share/direnv/allow/= before running the script, and then look for that count to go up.
+
+  I implemented the above, and it's not working consistently.  I can't figure it out.  It works with a sleep between the direnv operations.  I might just have to leave that, if I want automated tests.
+- Note taken on [2021-04-04 Sun 12:31] \\
+  Just running =dm load...= and =dm unload...= on the command-line and everything seems to work fine.  The tests have errors where direnv is not trusting a .envrc that was created with =direnv edit= when you do two =dm= commands in a row.  It sorta almost feels like a race condition maybe?

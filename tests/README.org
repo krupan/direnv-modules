@@ -13,3 +13,5 @@ Tests should be named in the form test-feature.
 Common functionality needed by multiple tests should go in =test-funcs=.
 
 Using =set -e= at the start of each test script is strongly recommended.
+
+direnv creates a file every time dm loads or unloads a dmodulfile (it's part of the direnv security model).  This creates a race condition in our test scripts.  To prevent this, =test-funcs= has begin_direnv and end_direnv functions that you need to wrap every dm load or unload call with.  See =test-unload= for an example of this.  *However*, this isn't solving the problem completely.  Stay tuned.

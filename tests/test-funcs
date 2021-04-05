@@ -1,4 +1,36 @@
 # -*- sh -*-
+ALLOW_DIR="$HOME/.local/share/direnv/allow/"
+
+_count_allowed () {
+    count=$(ls -1Uqa "$ALLOW_DIR" | grep -c '.*')
+    echo "in count_allowed $count"
+}
+
+wait_direnv () {
+    original_count=$1
+    local count=0
+    _count_allowed
+    echo "in wait_on_allowed, original count: $original_count"
+    echo "in wait_on_allowed $count"
+    while [ $count -eq $original_count ]; do
+        sleep 0.1
+        _count_allowed
+        echo "in wait_on_allowed $count"
+    done
+    echo "done waiting: $count"
+}
+
+begin_direnv () {
+    count=0
+    _count_allowed
+}
+
+end () {
+    begin_direnv
+    direnv deny .
+    wait_direnv $count
+}
+
 end_test () {
     direnv deny .
     rm -f .envrc
