@@ -29,7 +29,8 @@ def remove(dmodulefile, filename):
         if dmodulefile not in line:
             lines_to_write.append(line)
     filepath.write_text('\n'.join(lines_to_write))
-
+    if filepath.stat().st_size == 0:
+        filepath.unlink()
 
 commands = {'add': add,
             'remove': remove}
