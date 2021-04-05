@@ -6,6 +6,10 @@
 
 This is an Environment Modules-like interface built on top of direnv, for those who want the best of both worlds.
 
+Here's a quick demo
+
+<a href="https://asciinema.org/a/405131" target="_blank"><img src="https://asciinema.org/a/405131.svg" /></a>
+
 ** Setup
 
 Create dmodulefiles in a directory structure like this:
